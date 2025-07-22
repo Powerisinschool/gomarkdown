@@ -117,6 +117,16 @@ func (p *Parser) parseBlocks() []ast.BlockNode {
 			i++
 			continue
 		}
+		// Parse headings
+		if strings.HasPrefix(line, "#") {
+			blk := strings.SplitN(line, " ", 2)
+			level := strings.Count(blk[0], "#")
+			if level >= 1 && level <= 6 && level == len(blk[0]) {
+				blocks = append(blocks, &ast.Heading{Level: level, Children: p.inlineParse(blk[1])})
+				i++
+				continue
+			}
+		}
 		// Default to a paragraph
 		pNode := &ast.Paragraph{Children: p.inlineParse(line)}
 		blocks = append(blocks, pNode)

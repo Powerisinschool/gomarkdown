@@ -22,7 +22,7 @@ func TestParseEmpty(t *testing.T) {
 		test_input := ""
 		p := parser.New([]byte(test_input))
 		doc := p.Parse()
-		if doc.Children[0] != nil {
+		if doc.Children != nil {
 			t.Errorf("expected nil, got '%s'", doc.Children[0].(*ast.Paragraph).Children[0].(*ast.Text).Value)
 		}
 		//if doc.Children[0].(*ast.Paragraph).Children[0].(*ast.Text).Value != "" {
