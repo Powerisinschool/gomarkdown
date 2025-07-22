@@ -71,3 +71,18 @@ type ListItem struct {
 }
 
 func (li *ListItem) node() {}
+
+type CodeBlock struct {
+	Language string // The language identifier e.g. "go"
+	Content  string // The raw code block content TODO: Should this be a string or a []byte?
+}
+
+func (cd *CodeBlock) node()      {}
+func (cd *CodeBlock) blockNode() {}
+
+type InlineCode struct {
+	Value string
+}
+
+func (ic *InlineCode) node()       {}
+func (ic *InlineCode) inlineNode() {}
