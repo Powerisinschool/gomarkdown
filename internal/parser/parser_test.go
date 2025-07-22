@@ -25,9 +25,6 @@ func TestParseEmpty(t *testing.T) {
 		if doc.Children != nil {
 			t.Errorf("expected nil, got '%s'", doc.Children[0].(*ast.Paragraph).Children[0].(*ast.Text).Value)
 		}
-		//if doc.Children[0].(*ast.Paragraph).Children[0].(*ast.Text).Value != "" {
-		//	t.Errorf("expected '%s', got '%s'", test_input, doc.Children[0].(*ast.Paragraph).Children[0].(*ast.Text).Value)
-		//}
 	})
 }
 
