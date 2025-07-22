@@ -29,6 +29,30 @@ func (r *Renderer) renderNode(node ast.Node) error {
 				return err
 			}
 		}
+	case *ast.List:
+		if _, err := r.w.Write([]byte("<ul>")); err != nil {
+			return err
+		}
+		for _, c := range n.Items {
+			if err := r.renderNode(c); err != nil {
+				return err
+			}
+		}
+		if _, err := r.w.Write([]byte("</ul>\n")); err != nil {
+			return err
+		}
+	case *ast.ListItem:
+		if _, err := r.w.Write([]byte("<li>")); err != nil {
+			return err
+		}
+		for _, c := range n.Children {
+			if err := r.renderNode(c); err != nil {
+				return err
+			}
+		}
+		if _, err := r.w.Write([]byte("</li>\n")); err != nil {
+			return err
+		}
 	case *ast.Heading:
 		if _, err := r.w.Write([]byte("<h" + strconv.Itoa(int(n.Level)) + ">")); err != nil {
 			return err

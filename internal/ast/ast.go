@@ -45,7 +45,7 @@ func (t *Text) node()       {}
 func (t *Text) inlineNode() {}
 
 type Strong struct {
-	Children []Node
+	Children []InlineNode
 }
 
 func (s *Strong) node()       {}
@@ -58,3 +58,16 @@ type Heading struct {
 
 func (h *Heading) node()      {}
 func (h *Heading) blockNode() {}
+
+type List struct {
+	Items []*ListItem
+}
+
+func (l *List) node()      {}
+func (l *List) blockNode() {}
+
+type ListItem struct {
+	Children []InlineNode
+}
+
+func (li *ListItem) node() {}
