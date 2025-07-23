@@ -53,6 +53,16 @@ func (r *Renderer) renderNode(node ast.Node) error {
 		if _, err := r.w.Write([]byte("</li>\n")); err != nil {
 			return err
 		}
+	case *ast.CodeBlock:
+		if _, err := r.w.Write([]byte("<pre><code>")); err != nil {
+			return err
+		}
+		if _, err := r.w.Write([]byte(n.Content)); err != nil {
+			return err
+		}
+		if _, err := r.w.Write([]byte("</code></pre>\n")); err != nil {
+			return err
+		}
 	case *ast.Heading:
 		if _, err := r.w.Write([]byte("<h" + strconv.Itoa(int(n.Level)) + ">")); err != nil {
 			return err
@@ -77,6 +87,30 @@ func (r *Renderer) renderNode(node ast.Node) error {
 			}
 		}
 		if _, err := r.w.Write([]byte("</p>\n")); err != nil {
+			return err
+		}
+	case *ast.Strong:
+		if _, err := r.w.Write([]byte("<strong>")); err != nil {
+			return err
+		}
+		for _, c := range n.Children {
+			if err := r.renderNode(c); err != nil {
+				return err
+			}
+		}
+		if _, err := r.w.Write([]byte("</strong>")); err != nil {
+			return err
+		}
+	case *ast.Emphasis:
+		if _, err := r.w.Write([]byte("<em>")); err != nil {
+			return err
+		}
+		for _, c := range n.Children {
+			if err := r.renderNode(c); err != nil {
+				return err
+			}
+		}
+		if _, err := r.w.Write([]byte("</em>")); err != nil {
 			return err
 		}
 	case *ast.Text:

@@ -1,4 +1,4 @@
 #!/bin/bash
-### This script takes the sample input in test_input.md
+### This script takes the sample input in sample.md
 ### and converts it to HTML
-cat test_input.md | go run ./cmd/gomarkdown/main.go
+cat sample.md | go run ./cmd/gomarkdown/main.go > sample.html

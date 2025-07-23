@@ -6,13 +6,13 @@ type Node interface {
 	node()
 }
 
-// BlockNode represents block-level nodes like paragraphs and headings
+// BlockNode represents block-level nodes like paragraphs and headings (can be a direct child of a document)
 type BlockNode interface {
 	Node
 	blockNode()
 }
 
-// InlineNode represents inline-level nodes like text and links
+// InlineNode represents inline-level nodes like text and links (within a block-level node)
 type InlineNode interface {
 	Node
 	inlineNode()
@@ -51,6 +51,13 @@ type Strong struct {
 func (s *Strong) node()       {}
 func (s *Strong) inlineNode() {}
 
+type Emphasis struct {
+	Children []InlineNode
+}
+
+func (e *Emphasis) node()       {}
+func (e *Emphasis) inlineNode() {}
+
 type Heading struct {
 	Level    int
 	Children []InlineNode
@@ -80,9 +87,18 @@ type CodeBlock struct {
 func (cd *CodeBlock) node()      {}
 func (cd *CodeBlock) blockNode() {}
 
-type InlineCode struct {
+type Code struct {
 	Value string
 }
 
-func (ic *InlineCode) node()       {}
-func (ic *InlineCode) inlineNode() {}
+func (ic *Code) node()       {}
+func (ic *Code) inlineNode() {}
+
+type Delimiter struct {
+	Value    string
+	Count    int
+	Position int
+}
+
+func (d *Delimiter) node()       {}
+func (d *Delimiter) inlineNode() {}
